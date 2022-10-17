@@ -39,20 +39,8 @@ public class NumberOFIslands2 {
                 int py = find(nextcellno,parent); //cell number is the representation of our (row,col) index in a single number index example (1,2) in 7 
                 if(px != py)
                 {
-                    if(rank[px] > rank[py])
-                    {
-                        parent[py] = px;
-                    }
-                    else if(rank[py] > rank[px])
-                    {
-                        parent[px] = py;
-                    }
-                    else 
-                    {
-                        parent[px] = py;
-                        rank[px]++;
-                    }
-                    count--;
+                    union(rank,parent , px , py);
+                    count--;    //subtracting cause the neighbouring islands are already there it is our island that have formed so if we are not part of neighbouring island family we become there part and then we need to decrease count by 1
                 }
             }
 
@@ -62,6 +50,23 @@ public class NumberOFIslands2 {
         
 
     }
+    
+    public static void union(int rank[] , int parent[] , int px , int py){
+        if(rank[px] > rank[py])
+            {
+                parent[py] = px;
+            }
+        else if(rank[py] > rank[px])
+            {
+                parent[px] = py;
+            }
+        else 
+            {
+                parent[px] = py;
+                rank[px]++;
+            }
+    }
+    
     private static int find(int x, int[] parent) {
         if(parent[x] == x)
         {
